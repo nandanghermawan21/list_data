@@ -681,7 +681,7 @@ class ListDataComponentController<T>
       return;
     }
     value.dataSource!(total, value.searchController.text).then((datas) {
-      value.data.addAll(datas);
+      value.data.addAll(List.from(datas));
       if (value.onDataReceived != null) {
         value.onDataReceived!(datas, value.searchController.text);
       }
