@@ -210,7 +210,7 @@ class _ListDataComponentState<T> extends State<ListDataComponent<T>> {
   }
 
   Widget columnMode() {
-    List<T> data = widget.controller?.value.data ?? [];
+    List<T> data = List.from(widget.controller?.value.data ?? []);
     return Container(
       color: Colors.transparent,
       child: Column(
@@ -273,7 +273,7 @@ class _ListDataComponentState<T> extends State<ListDataComponent<T>> {
   }
 
   Widget tilewMode() {
-    List<T> data = widget.controller?.value.data ?? [];
+    List<T> data = List.from(widget.controller?.value.data ?? []);
     return Container(
       color: Colors.transparent,
       width: double.infinity,
@@ -342,7 +342,7 @@ class _ListDataComponentState<T> extends State<ListDataComponent<T>> {
   }
 
   Widget listMode() {
-    List<T> data = widget.controller?.value.data ?? [];
+    List<T> data = List.from(widget.controller?.value.data ?? []);
     return NotificationListener(
       onNotification: (n) {
         if (n is ScrollEndNotification) {
