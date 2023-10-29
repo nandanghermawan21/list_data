@@ -141,23 +141,12 @@ class _ListDataComponentState<T> extends State<ListDataComponent<T>> {
                     FilteringTextInputFormatter.deny(RegExp("[',\"]")),
                   ],
                   decoration: InputDecoration(
-                      enabledBorder: InputBorder.none,
-                      contentPadding:
-                          const EdgeInsets.only(left: 15, right: 15),
-                      hintText: widget.searchHint ?? 'Search',
-                      hintStyle: widget.searchStyle ??
-                          TextStyle(
-                            color:
-                                Theme.of(context).textTheme.bodyMedium!.color,
-                            fontFamily: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .fontFamily,
-                            fontSize: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .fontSize,
-                          )),
+                    enabledBorder: InputBorder.none,
+                    contentPadding: const EdgeInsets.only(left: 15, right: 15),
+                    hintText: widget.searchHint ?? 'Search',
+                    hintStyle: widget.searchStyle ??
+                        Theme.of(context).textTheme.bodyMedium,
+                  ),
                 ),
               ),
             ),
@@ -221,31 +210,30 @@ class _ListDataComponentState<T> extends State<ListDataComponent<T>> {
   }
 
   Widget columnMode() {
+    List<T> data = widget.controller?.value.data ?? [];
     return Container(
       color: Colors.transparent,
       child: Column(
         children: [
           Column(
             children: List.generate(
-              (widget.controller?.value.data.length ?? 0) +
+              (data.length ?? 0) +
                   (widget.controller?.value.state ==
                           ListDataComponentState.loading
                       ? widget.loaderCount!
                       : 0),
               (index) {
                 if (widget.itemBuilder != null) {
-                  if (index < (widget.controller?.value.data.length ?? -1)) {
+                  if (index < (data.length ?? -1)) {
                     return GestureDetector(
                       onTap: () {
-                        widget.controller?.value.selected =
-                            widget.controller?.value.data[index];
+                        widget.controller?.value.selected = data[index];
                         widget.controller?.commit();
                         if (widget.onSelected != null) {
-                          widget.onSelected!(
-                              widget.controller?.value.data[index]);
+                          widget.onSelected!(data[index]);
                         }
                       },
-                      child: item(widget.controller?.value.data[index], index),
+                      child: item(data[index], index),
                     );
                   } else {
                     return loader();
@@ -285,6 +273,7 @@ class _ListDataComponentState<T> extends State<ListDataComponent<T>> {
   }
 
   Widget tilewMode() {
+    List<T> data = widget.controller?.value.data ?? [];
     return Container(
       color: Colors.transparent,
       width: double.infinity,
@@ -316,28 +305,25 @@ class _ListDataComponentState<T> extends State<ListDataComponent<T>> {
           physics: const AlwaysScrollableScrollPhysics(),
           child: Wrap(
             children: List.generate(
-              (widget.controller?.value.data.length ?? 0) +
+              (data.length ?? 0) +
                   (widget.controller?.value.state ==
                           ListDataComponentState.loading
                       ? widget.loaderCount!
                       : 0),
               (index) {
                 if (widget.itemBuilder != null) {
-                  if (index < (widget.controller?.value.data.length ?? -1)) {
+                  if (index < (data.length ?? -1)) {
                     return GestureDetector(
                       onTap: () {
-                        widget.controller?.value.selected =
-                            widget.controller?.value.data[index];
+                        widget.controller?.value.selected = data[index];
                         widget.controller?.commit();
                         if (widget.onSelected != null) {
-                          widget.onSelected!(
-                              widget.controller?.value.data[index]);
+                          widget.onSelected!(data[index]);
                         }
                       },
                       child: IntrinsicWidth(
                         child: Container(
-                          child:
-                              item(widget.controller?.value.data[index], index),
+                          child: item(data[index], index),
                         ),
                       ),
                     );
@@ -356,6 +342,7 @@ class _ListDataComponentState<T> extends State<ListDataComponent<T>> {
   }
 
   Widget listMode() {
+    List<T> data = widget.controller?.value.data ?? [];
     return NotificationListener(
       onNotification: (n) {
         if (n is ScrollEndNotification) {
@@ -383,23 +370,22 @@ class _ListDataComponentState<T> extends State<ListDataComponent<T>> {
         controller: widget.controller?.value.scrollController,
         physics: const AlwaysScrollableScrollPhysics(),
         children: List.generate(
-          (widget.controller?.value.data.length ?? 0) +
+          (data.length ?? 0) +
               (widget.controller?.value.state == ListDataComponentState.loading
                   ? widget.loaderCount!
                   : 0),
           (index) {
             if (widget.itemBuilder != null) {
-              if (index < (widget.controller?.value.data.length ?? -1)) {
+              if (index < (data.length ?? -1)) {
                 return GestureDetector(
                   onTap: () {
-                    widget.controller?.value.selected =
-                        widget.controller?.value.data[index];
+                    widget.controller?.value.selected = data[index];
                     widget.controller?.commit();
                     if (widget.onSelected != null) {
-                      widget.onSelected!(widget.controller?.value.data[index]);
+                      widget.onSelected!(data[index]);
                     }
                   },
-                  child: item(widget.controller?.value.data[index], index),
+                  child: item(data[index], index),
                 );
               } else {
                 return loader();
