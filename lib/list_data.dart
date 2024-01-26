@@ -629,7 +629,7 @@ class ListDataComponentController<T>
     commit();
   }
 
-  void refresh({
+  Future<void> refresh({
     refreshDelayed,
   }) {
     value.state = ListDataComponentState.loading;
@@ -638,9 +638,10 @@ class ListDataComponentController<T>
     if (value.dataSource == null) {
       value.state = ListDataComponentState.loaded;
       commit();
-      return;
+      return Future.value();
     }
-    Future.delayed(Duration(seconds: refreshDelayed ?? value.refreshDelayed))
+    return Future.delayed(
+            Duration(seconds: refreshDelayed ?? value.refreshDelayed))
         .then((waiting) {
       value.dataSource!(0, value.searchController.text).then((datas) {
         value.data = (datas);
