@@ -33,6 +33,7 @@ class ListDataComponent<T> extends StatefulWidget {
   final String? showMoreText;
   final String? emptyDataText;
   final TextStyle? emptyDataTextStyle;
+  final VoidCallback? onUpdated;
 
   const ListDataComponent(
       {Key? key,
@@ -59,7 +60,8 @@ class ListDataComponent<T> extends StatefulWidget {
       this.searchIcon,
       this.showMoreText,
       this.emptyDataText,
-      this.emptyDataTextStyle})
+      this.emptyDataTextStyle,
+      this.onUpdated})
       : super(
           key: key,
         );
@@ -74,6 +76,7 @@ class _ListDataComponentState<T> extends State<ListDataComponent<T>> {
     widget.controller?.value.dataSource = widget.dataSource;
     widget.controller?.value.onDataReceived = widget.onDataReceived;
     widget.controller?.value.onSelected = widget.onSelected;
+    widget.controller?.value.onUpdated = widget.onUpdated;
     super.initState();
     widget.controller?.refresh();
   }
@@ -718,6 +721,7 @@ class ListDataComponentController<T>
 
   void commit() {
     notifyListeners();
+    value.onUpdated?.call();
   }
 
   void startLoading() {
@@ -743,6 +747,7 @@ class ListDataComponentValue<T> {
   FutureObjectBuilderWith2Param<List<T>, int, String?>? dataSource;
   ValueChanged2Param<List<T>, String?>? onDataReceived;
   ValueChanged<T?>? onSelected;
+  VoidCallback? onUpdated;
   String? errorMessage;
   int refreshDelayed = 0;
 }
