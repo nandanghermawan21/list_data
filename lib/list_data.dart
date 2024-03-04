@@ -15,6 +15,7 @@ class ListDataComponent<T> extends StatefulWidget {
   final FutureObjectBuilderWith2Param<List<T>, int, String?>? dataSource;
   final ValueChanged2Param<List<T>, String?>? onDataReceived;
   final bool showSearchBox;
+  final Widget? extraToolbar;
   final String? searchHint;
   final ListDataComponentMode listViewMode;
   final Widget? header;
@@ -42,6 +43,7 @@ class ListDataComponent<T> extends StatefulWidget {
       this.dataSource,
       this.onDataReceived,
       this.showSearchBox = false,
+      this.extraToolbar,
       this.searchHint,
       this.listViewMode = ListDataComponentMode.listView,
       this.header,
@@ -93,6 +95,7 @@ class _ListDataComponentState<T> extends State<ListDataComponent<T>> {
             children: [
               widget.header != null ? widget.header! : const SizedBox(),
               widget.showSearchBox ? searchBox() : const SizedBox(),
+              widget.extraToolbar ?? const SizedBox(),
               [ListDataComponentMode.listView, ListDataComponentMode.tile]
                       .contains(widget.listViewMode)
                   ? Expanded(child: childBuilder())
