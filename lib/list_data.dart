@@ -33,6 +33,7 @@ class ListDataComponent<T> extends StatefulWidget {
   final Widget? searchIcon;
   final String? showMoreText;
   final String? emptyDataText;
+  final String? refreshIntructionText;
   final TextStyle? emptyDataTextStyle;
   final VoidCallback? onUpdated;
 
@@ -63,7 +64,8 @@ class ListDataComponent<T> extends StatefulWidget {
       this.showMoreText,
       this.emptyDataText,
       this.emptyDataTextStyle,
-      this.onUpdated})
+      this.onUpdated,
+      this.refreshIntructionText})
       : super(
           key: key,
         );
@@ -584,6 +586,13 @@ class _ListDataComponentState<T> extends State<ListDataComponent<T>> {
                         height: 10,
                       ),
                       Text(widget.emptyDataText ?? "No Data",
+                          style: widget.emptyDataTextStyle ??
+                              Theme.of(context).textTheme.bodyMedium),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                          widget.refreshIntructionText ?? "Top here to refresh",
                           style: widget.emptyDataTextStyle ??
                               Theme.of(context).textTheme.bodyMedium),
                     ],
