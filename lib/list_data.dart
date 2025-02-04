@@ -225,14 +225,14 @@ class _ListDataComponentState<T> extends State<ListDataComponent<T>> {
         children: [
           Column(
             children: List.generate(
-              (data.length ?? 0) +
+              (data.length) +
                   (widget.controller?.value.state ==
                           ListDataComponentState.loading
                       ? widget.loaderCount!
                       : 0),
               (index) {
                 if (widget.itemBuilder != null) {
-                  if (index < (data.length ?? -1)) {
+                  if (index < (data.length)) {
                     return GestureDetector(
                       onTap: () {
                         widget.controller?.value.selected = data[index];
@@ -313,14 +313,14 @@ class _ListDataComponentState<T> extends State<ListDataComponent<T>> {
           physics: const AlwaysScrollableScrollPhysics(),
           child: Wrap(
             children: List.generate(
-              (data.length ?? 0) +
+              (data.length) +
                   (widget.controller?.value.state ==
                           ListDataComponentState.loading
                       ? widget.loaderCount!
                       : 0),
               (index) {
                 if (widget.itemBuilder != null) {
-                  if (index < (data.length ?? -1)) {
+                  if (index < (data.length)) {
                     return GestureDetector(
                       onTap: () {
                         widget.controller?.value.selected = data[index];
@@ -378,13 +378,13 @@ class _ListDataComponentState<T> extends State<ListDataComponent<T>> {
         controller: widget.controller?.value.scrollController,
         physics: const AlwaysScrollableScrollPhysics(),
         children: List.generate(
-          (data.length ?? 0) +
+          (data.length) +
               (widget.controller?.value.state == ListDataComponentState.loading
                   ? widget.loaderCount!
                   : 0),
           (index) {
             if (widget.itemBuilder != null) {
-              if (index < (data.length ?? -1)) {
+              if (index < (data.length)) {
                 return GestureDetector(
                   onTap: () {
                     widget.controller?.value.selected = data[index];
@@ -408,7 +408,7 @@ class _ListDataComponentState<T> extends State<ListDataComponent<T>> {
   }
 
   Widget item(T? data, int index) {
-    List<Widget> _item = [
+    List<Widget> item = [
       draggable(data, index),
       Container(
         color: Colors.transparent,
@@ -435,7 +435,7 @@ class _ListDataComponentState<T> extends State<ListDataComponent<T>> {
     return Container(
       color: Colors.transparent,
       child: Column(
-        children: _item,
+        children: item,
       ),
     );
   }
@@ -468,7 +468,7 @@ class _ListDataComponentState<T> extends State<ListDataComponent<T>> {
         widget.controller?.value.droppedItem = null;
         widget.controller?.commit();
       },
-      onWillAccept: (object) {
+      onWillAcceptWithDetails: (object) {
         widget.controller?.value.droppedItem = null;
         widget.controller?.commit();
         if (widget.onWillReceiveDropedData != null) {
@@ -477,7 +477,7 @@ class _ListDataComponentState<T> extends State<ListDataComponent<T>> {
           return true;
         }
       },
-      onAccept: (object) {
+      onAcceptWithDetails: (object) {
         widget.controller?.value.droppedItem = null;
         widget.controller?.commit();
         if (widget.onReceiveDropedData != null) {
@@ -536,7 +536,7 @@ class _ListDataComponentState<T> extends State<ListDataComponent<T>> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Icon(
-            FontAwesomeIcons.exclamationTriangle,
+            FontAwesomeIcons.triangleExclamation,
             color: Colors.red,
             size: 50,
           ),
@@ -614,7 +614,7 @@ class _ListDataComponentState<T> extends State<ListDataComponent<T>> {
         widget.controller?.value.droppedItem = null;
         widget.controller?.commit();
       },
-      onWillAccept: (object) {
+      onWillAcceptWithDetails: (object) {
         widget.controller?.value.droppedItem = null;
         widget.controller?.commit();
         if (widget.onWillReceiveDropedData != null) {
@@ -623,7 +623,7 @@ class _ListDataComponentState<T> extends State<ListDataComponent<T>> {
           return true;
         }
       },
-      onAccept: (object) {
+      onAcceptWithDetails: (object) {
         widget.controller?.value.droppedItem = null;
         widget.controller?.commit();
         if (widget.onReceiveDropedData != null) {
@@ -682,9 +682,9 @@ class ListDataComponentController<T>
   }
 
   void getOther() {
-    double _latPosition = 0;
+    double latPosition = 0;
     try {
-      _latPosition = value.scrollController.position.pixels;
+      latPosition = value.scrollController.position.pixels;
     } catch (e) {
       debugPrint("");
     }
@@ -705,7 +705,7 @@ class ListDataComponentController<T>
       setSelectedData();
       commit();
       try {
-        value.scrollController.jumpTo(_latPosition);
+        value.scrollController.jumpTo(latPosition);
       } catch (e) {
         debugPrint("");
       }
