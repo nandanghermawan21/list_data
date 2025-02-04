@@ -9,23 +9,23 @@ environment:
   sdk: ^3.6.0
 
 dependencies:
+  error_handling:
+    git:
+      url: https://github.com/nandanghermawan21/error_handling.git
+      ref: 1.1.3
   flutter:
     sdk: flutter
+  flutter_widget_from_html: ^0.15.3
   font_awesome_flutter:
     git:
       url: https://github.com/Renoldi/faf
       ref: master
   skeleton_text: ^3.0.0
-  flutter_widget_from_html: ^0.10.5+2
-  error_handling:
-    git:
-      url: https://github.com/nandanghermawan21/error_handling.git
-      ref: 1.1.3
 
 dev_dependencies:
+  flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
 
 flutter:
   uses-material-design: true
